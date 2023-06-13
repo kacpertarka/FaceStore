@@ -1,24 +1,104 @@
+:root {
+  --input-form-color: #a09696;
+  --input-bakground-color: #F7F9F5;
+  --input-border-color: #25272e;
+  --background-color: #3A3D4E;
+  --font-color: #E46D5F;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
 .App {
   text-align: center;
+  
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.form-container {
+    text-align: center;
+    height: 300px;
+    width: 70%;
+    margin: auto;
+    margin-top: 100px;
+    padding: 30px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.input-form {
+    width: 70%;
+    margin: 0 auto;
+    background-color: var(--input-form-color);
+    padding: 30px;
+
+    border: 2px solid var(--input-border-color);
+    border-radius: 15px;
+
+    box-shadow: 0 0 10px #2c2c30;
 }
 
-.App-intro {
-  font-size: large;
+.input-form input {
+    width: 90%;
+    height: 50px;
+    margin: 5px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background-color: var(--input-bakground-color);
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--font-color);
+}
+.input-form input:not(:last-of-type):hover {
+  cursor: pointer;
+  background-color: #f08d82;
+  text-shadow: 10 10 10px #ae554c;
+}
+.input-form input:last-of-type {
+    background-color: #f08d82;
+    border: none;
+}
+.input-form input:last-of-type:hover {
+  cursor: pointer;
+    box-shadow: 0 0 10px #f3a39a;
+    text-shadow: 0 0 1px #ae554c;
+}
+.input-form:hover input:not(:last-of-type){
+    border: 1px solid  #7f7676;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #453f3f;
+}
+.input-form p {
+  color: var(--input-border-color);
+  font-size: 20px;;
+}
+.input-form p:hover {
+  cursor: pointer;
+  text-shadow: 0 0 10px #453f3f;
+}
+.login-register-failed {
+  font-weight: 800;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(5px) rotate(5deg);
+  }
+  75% {
+    transform: translateX(-5px) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.shake-animation {
+  animation-name: shake;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
 }
