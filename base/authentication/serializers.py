@@ -26,12 +26,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     """
     password = serializers.CharField(write_only=True)
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('id', 'email', 'password', 'first_name', 'last_name')
         
     def create(self, data):
         try:
-            user = self.Meta.model.objects.create(
+            user = User.objects.create(
                 email = data.get('email'),
                 first_name = data.get('first_name'),
                 last_name = data.get('last_name')
@@ -45,5 +45,3 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             return Response({'message': 'Email is already taken'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response({'message': 'An error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-    
