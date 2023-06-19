@@ -91,7 +91,7 @@ export const AuthProvider = ({children}) => {
         if (loading) {
             refreshToken()
         }
-        const intervalTime = 1000 * 60 * 1 // 4 minutes
+        const intervalTime = 1000 * 60 * 4 // 4 minutes
         const interval = setInterval( () => {
             if (authToken) {
                 refreshToken()

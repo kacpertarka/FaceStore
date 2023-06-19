@@ -53,35 +53,45 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             profile = Profile(user=user)
             profile.activate_code = code
             profile.save()
-            ## TODO wywołaj wywołaj funckje do usuwania tokenu
+            
             # sendEmail
             try:
                 send_activate_code(user, code)
             except SMTPException:
                 print(SMTPException)
                 # TODO 
-            #
-            thred_to_nullable_code = threading.Thread(target=profile.null_activate_code, args=[1,])
+            ### TODO wywołaj wywołaj funckje do usuwania tokenu
+            thred_to_nullable_code = threading.Thread(target=profile.null_activate_code, args=[5,])
             thred_to_nullable_code.start()
             return data
         
         ##### TODO --- nie mozna zwracac Response ---- popraw
         except:
-            return 0
+            raise serializers.ValidationError("User has not been created.")
         
 
-class ActivateAccountSerializer(serializers.ModelSerializer):
+class ActivateAccountSerializer(serializers.Serializer):
     """
     Serializer for activate account - change is_active field
     """
-    class Meta:
-        model = User
-        fields = ('email', 'first_name', 'last_name')
+    activate_code = serializers.CharField(write_only=True)
+    email = serializers.CharField()
         
     def update(self, instance, data):  
+        """Chang is_active field to True"""
         instance.is_active = True
         instance.save()
         return instance
+    
+    def validate_activate_code(self, value):
+        """Validate activate code"""
+        user_email = self.initial_data['email']
+        user = User.objects.get(email=user_email)
+        profile = user.profile
+        if not profile.activate_code == value:
+            raise serializers.ValidationError()
+        return value
+        
 
 
 class RefreshActivateCodeSerializer(serializers.ModelSerializer):
@@ -96,17 +106,14 @@ class RefreshActivateCodeSerializer(serializers.ModelSerializer):
         """
         Refresh activate code - generate new, send mail
         """
-        print('JESTEM')
         code = gen_activate_code()
         
         instance.activate_code = code
-        print("INSTANCE: ", instance.activate_code)
         user = instance.user
         try:
             send_activate_code(user, code)
         except SMTPException:
-            print(SMTPException)
-            # TODO 
+            raise serializers.ValidationError(SMTPException)
         instance.save()
         thred_to_nullable_code = threading.Thread(target=instance.null_activate_code, args=[1,])
         thred_to_nullable_code.start()

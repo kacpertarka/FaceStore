@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../constants/constants";
+import { API_URL } from "../../constants/constants";
 
 
 
@@ -14,7 +14,7 @@ const RegisterPage = () => {
     function checkEqualityPassword(e ) {
         const password = e.target.password.value
         const confirmed_password = e.target.confirmed_password.value
-        return password == confirmed_password
+        return password === confirmed_password
     }
 
     const handleClick = () =>{
@@ -59,15 +59,23 @@ const RegisterPage = () => {
             
             if (response.status === 200) {
                 // TODO ---- zrobic generacje kodu do akywacji konta
-                navigate('/login')
+                const body = await response.json()
+                localStorage.setItem('activateCode', body['activate_code'])
+                localStorage.setItem('email', body['email'])
+                navigate('/activate')
             } else {
-                console.log("JEstem tutaj")
+                e.target.password.value = ''
+                e.target.confirmed_password.value = ''
                 setAccountNotCreated(true)
             }
         } catch {
-            alert("Something went wrong")
+            e.target.password.value = ''
+            e.target.confirmed_password.value = ''
+            setAccountNotCreated(true)
         }
     }
+
+
 
     return (
         

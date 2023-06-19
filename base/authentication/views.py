@@ -43,18 +43,17 @@ class ActivateAccountView(APIView):
     """
     serializer_class = ActivateAccountSerializer
     
-    def get(self, request, activation_token):
+    def post(self, request, activation_token):
         """
         Activate user
         """        
         try:
-            # here is validation activate code :)
             profile = Profile.objects.get(activate_code=activation_token)
         except Profile.DoesNotExist:
             return Response({'message': 'Error, user does not found'}, status=400)
         
         user = profile.user
-            
+        
         serializer = self.serializer_class(user,  request.data)
         if serializer.is_valid():
             serializer.update(instance=user, data=None)
