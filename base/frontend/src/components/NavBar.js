@@ -4,18 +4,16 @@ import { Navigate } from "react-router-dom";
 
 const NavBar = () => {
 
-    const { user, logout } =useContext(AuthContext)
-    console.log("USER: ", user)
+    const { logout } =useContext(AuthContext)
     return (
-        <div>
+        <div className='navbar'>
             <ul>
-                <li>Profile</li>
+                <li>Profile </li>
                 <li>Add New Post</li>
-                <li>Ntifications</li>
+                <li>Notifications</li>
                 <li>Messages</li>
                 <li onClick={logout}>LogOut</li>
             </ul>
-            <p>Hello {user.first_name}</p>
         </div>
     )
 }

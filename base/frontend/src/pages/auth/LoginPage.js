@@ -14,7 +14,7 @@ const LoginPage = () => {
     return (
         <div class='form-container'>
         <form onSubmit={login} className='input-form'>
-            <input type='email' name='email' placeholder={email} value={email} />
+            <input type='email' name='email' placeholder={email}  />
             <input type='password' name='password' placeholder='Enter your Password' />
             <input type='submit' value='Login' />
             <p onClick={handleClick}>New? Let's create an account</p>

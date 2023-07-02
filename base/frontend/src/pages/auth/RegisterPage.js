@@ -79,7 +79,7 @@ const RegisterPage = () => {
 
     return (
         
-        <div class='form-container'>
+        <div className='form-container'>
             <form onSubmit={handleRegister} class='input-form'>
                 <input type='text' name='first_name' placeholder='First Name' autoComplete='first_name' /> <br />
                 <input type='text' name='last_name' placeholder='Last Name' autoComplete='last_name' /> <br />
